@@ -39,6 +39,10 @@ function getWordsFromHugeLabs(search) {
     .catch((err) => {
         let ul = document.querySelector('.wordlist');
         ul.innerHTML = "";
+        let msgHolder = document.createElement('h5');
+        let msg = document.createTextNode("No synonyms found for the searched word");
+        msgHolder.appendChild(msg);
+        ul.insertBefore(msgHolder, ul.childNodes[0]);
         errorHandler(error);
     });
 };
