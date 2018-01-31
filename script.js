@@ -21,18 +21,18 @@ function getWordsFromHugeLabs(search) {
     .then(res => {
         if (res) {
             let words = [];
-            if (res['noun']['syn']) {
+            if (res['noun']) {
                 let nounWords = res['noun']['syn'];
                 words = words.concat(nounWords);
             } else {
                 let nounWords = null;
 
             }
-            if (res['verb']['syn']) {
+            if (res['verb']) {
                 let verbWords = res['verb']['syn'];
                 words = words.concat(verbWords);
             }
-        
+            
             renderWords(words);
         }
     })
@@ -43,6 +43,7 @@ function getWordsFromHugeLabs(search) {
 
 // Renders a list of synonyms for the searched keyword
 function renderWords(words) {
+    
     let ul = document.querySelector('.wordlist');
     let msgHolder = document.createElement('h5');
     let msg = document.createTextNode("You also might wanna search for");
