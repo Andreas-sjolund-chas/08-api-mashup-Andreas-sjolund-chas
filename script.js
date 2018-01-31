@@ -80,13 +80,15 @@ function getImagesFromFlickr(words, callback) {
     var flickr_key = '7c1f028dbefb8fcfef42fd3891c69cec';
     var flickr_key_secret = 'a21b3246cabd27f2';
 
-    var url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickr_key}&tags=${words}`;
-    var searchMethod = '&tags=';
+    var url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickr_key}&text=${words}`;
+    var safe = '&safe_search=1';
     var json = '&format=json';
     var callback = '&nojsoncallback=1';
+
+    var query = url + json + callback + safe;
+    
     var error = 'no pictures found for the searched word';
 
-    var query = url + words + json + callback;
     fetch(query, {
         method: 'GET'
     })
