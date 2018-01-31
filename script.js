@@ -85,16 +85,17 @@ function getImagesFromFlickr(words, callback) {
     var safe = '&safe_search=1';
     var json = '&format=json';
     var callback = '&nojsoncallback=1';
+    var sort = '&sort=relevance';
 
-    var query = url + json + callback + safe;
+    var query = url + json + callback + safe + sort;
     
     var error = 'no pictures found for the searched word';
-
     fetch(query, {
         method: 'GET'
     })
     .then(res => res.json())
     .then(res => {
+        
         handlePhotos(res);
         if(res['photos']['total'] == 0) {
             errorHandler(error);    
@@ -108,7 +109,6 @@ function getImagesFromFlickr(words, callback) {
 
 // Renders the results from FlickrApi
 function handlePhotos(photos) {
-    console.log(photos);
     let content = document.querySelector('.errorMsgBox');
     content.innerHTML = "";
 
