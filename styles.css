@@ -23,9 +23,7 @@ form {
     flex-direction: column;
 }
 
-/* .photo {
-    display: flex;   
-} */
+
 
 a:hover {
     opacity: 0.6;
@@ -81,4 +79,8 @@ img {
 .searchBtn:hover, #wordBtn:hover {
     background: #565258;
     text-decoration: none;
+}
+
+.searchBtn:focus, #wordBtn:focus {
+    outline: 0;
 }
