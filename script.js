@@ -2,9 +2,10 @@ var queryString = window.location.search;
 
 var searchQuery = queryString.substring( queryString.indexOf('=') + 1 );
 
-
+getWordsFromHugeLabs(searchQuery);
 // Gets synonym words for the searched keyword from word.BigHugeLabsApi
-function getWordsFromHugeLabs(search, callback) {
+function getWordsFromHugeLabs(search) {
+    getImagesFromFlickr(search);
     var bigHugeLabs_key = '28d1c848e23e13d4722cec46813e8e81';
     var query = 'http://words.bighugelabs.com/api/2/' + bigHugeLabs_key + '/' + search + '/json';
     var error = 'no results found';
@@ -31,11 +32,10 @@ function getWordsFromHugeLabs(search, callback) {
             renderWords(words);
         }
     })
-    .catch(error => console.error('Error:', error));
+    .catch((err) => {
+        errorHandler(error);
+    });
 };
-
-getWordsFromHugeLabs(searchQuery);
-
 
 // Renders a list of synonyms for the searched keyword
 function renderWords(words) {
@@ -66,7 +66,7 @@ function renderWords(words) {
 
 // Gets the images from FlickrApi when a synonym is clicked
 function getImagesFromFlickr(words, callback) {
-
+    
     var flickr_key = '7c1f028dbefb8fcfef42fd3891c69cec';
     var flickr_key_secret = 'a21b3246cabd27f2';
 
@@ -74,23 +74,34 @@ function getImagesFromFlickr(words, callback) {
     var searchMethod = '&tags=';
     var json = '&format=json';
     var callback = '&nojsoncallback=1';
-    var error = 'no picture found for the searched word';
+    var error = 'no pictures found for the searched word';
 
-    var query = url + searchMethod + words + json + callback;
-    
-    result = fetch(query, {
+    var query = url + words + json + callback;
+    fetch(query, {
         method: 'GET'
     })
     .then(res => res.json())
-    .then(res => handlePhotos(res))
-    .catch(error => console.error('Error: ', error));
+    .then(res => {
+        handlePhotos(res);
+        if(res['photos']['total'] == 0) {
+            errorHandler(error);    
+        };
+    })
+    .catch(err => console.error('Get images error: ', error))
+    .catch((err) => {
+        errorHandler(error);
+    });
 };
 
 
 // Renders the results from FlickrApi
 function handlePhotos(photos) {
-    
+    console.log(photos);
+    let content = document.querySelector('.errorMsgBox');
+    content.innerHTML = "";
+
     let ul = document.querySelector('.photolist');
+    ul.innerHTML = "";
     const fragment = document.createDocumentFragment();
 
     photos['photos']['photo'].forEach(photo => {
@@ -101,11 +112,21 @@ function handlePhotos(photos) {
         
         var photoUrl = `https://farm${farmId}.staticflickr.com/${serverId}/${id}_${secret}.jpg`
         const li = document.createElement('li');
+        const a = document.createElement('a');
         const img = document.createElement('img');
+        a.setAttribute("href", photoUrl);
         img.setAttribute("src", photoUrl);
-        li.appendChild(img);
+        li.setAttribute("class", "photo");
+        li.appendChild(a);
+        a.appendChild(img)
         fragment.appendChild(li);
     });
     ul.appendChild(fragment);
+}
 
+function errorHandler(error) {
+    let content = document.querySelector('.errorMsgBox');
+    content.innerHTML = "";
+    let message = `<p class="errorMsg">${error}</p>`;
+    content.insertAdjacentHTML('afterbegin', message);
 }

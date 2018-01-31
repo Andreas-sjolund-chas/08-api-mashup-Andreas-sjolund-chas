@@ -8,12 +8,21 @@
     <title>Andreas Sjölund - Api Mashup</title>
 </head>
 <body>
-    <form action="" method="GET">
-        <input type="text" name="search" placeholder="search for tags..."/>
-        <button type="submit" value="submit">Search</button>
-    </form>    
-    <ul class="photolist"></ul>
-    <ul class="wordlist"></ul>
+    <header>
+        <form action="" method="GET">
+            <input class="searchInput" type="text" name="search" placeholder="search for images..."/>
+            <button class="searchBtn" type="submit" value="submit">Search</button>
+        </form>
+    </header>
+    <div class="errorMsgBox"></div>
+    <div class="content"> 
+        <ul class="photolist"></ul>
+        
+        <ul class="wordlist">
+            <h5>You also might wanna search for</h5>
+        </ul>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
