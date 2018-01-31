@@ -37,13 +37,14 @@ function getWordsFromHugeLabs(search) {
         }
     })
     .catch((err) => {
+        let ul = document.querySelector('.wordlist');
+        ul.innerHTML = "";
         errorHandler(error);
     });
 };
 
 // Renders a list of synonyms for the searched keyword
 function renderWords(words) {
-    
     let ul = document.querySelector('.wordlist');
     let msgHolder = document.createElement('h5');
     let msg = document.createTextNode("You also might wanna search for");
