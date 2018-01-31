@@ -1,8 +1,12 @@
-var queryString = window.location.search;
+let button = document.querySelector('.searchBtn');
 
-var searchQuery = queryString.substring( queryString.indexOf('=') + 1 );
+button.addEventListener('click', function(event) {
+    event.preventDefault();
+    let input = document.querySelector('.searchInput');
+    getWordsFromHugeLabs(input.value);
+    input.value = "";
+});
 
-getWordsFromHugeLabs(searchQuery);
 // Gets synonym words for the searched keyword from word.BigHugeLabsApi
 function getWordsFromHugeLabs(search) {
     getImagesFromFlickr(search);
@@ -40,6 +44,11 @@ function getWordsFromHugeLabs(search) {
 // Renders a list of synonyms for the searched keyword
 function renderWords(words) {
     let ul = document.querySelector('.wordlist');
+    let msgHolder = document.createElement('h5');
+    let msg = document.createTextNode("You also might wanna search for");
+    msgHolder.appendChild(msg);
+    
+    ul.innerHTML = "";
     const fragment = document.createDocumentFragment();
     
     words.forEach(word => {
@@ -51,8 +60,9 @@ function renderWords(words) {
         li.appendChild(btn);
         fragment.appendChild(li);
     });
-    
+
     ul.appendChild(fragment);
+    ul.insertBefore(msgHolder, ul.childNodes[0]);
     let buttons = document.querySelectorAll('#wordBtn');
 
         buttons.forEach(button => {
@@ -92,7 +102,6 @@ function getImagesFromFlickr(words, callback) {
         errorHandler(error);
     });
 };
-
 
 // Renders the results from FlickrApi
 function handlePhotos(photos) {
