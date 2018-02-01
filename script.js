@@ -1,4 +1,3 @@
-console.log(process.env.FLICKR_KEY);
 import './src/styles/styles.css';
 
 let button = document.querySelector('.searchBtn');
@@ -77,7 +76,6 @@ function renderWords(words) {
 
         buttons.forEach(button => {
             button.addEventListener('click', function(e) {
-                getImagesFromFlickr(e.target.value);
                 getWordsFromHugeLabs(e.target.value);
             });
     });
@@ -125,7 +123,7 @@ function handlePhotos(photos) {
     content.innerHTML = "";
 
     let ul = document.querySelector('.photolist');
-    ul.innerHTML = "";
+
     const fragment = document.createDocumentFragment();
 
     photos['photos']['photo'].forEach(photo => {
@@ -147,13 +145,16 @@ function handlePhotos(photos) {
         a.href = ownerUrl;
         a.target = '_blank';
         img.setAttribute("src", photoUrl);
+        img.setAttribute("class", "img-animation");
         li.setAttribute("class", "photo");
         li.appendChild(p);
         li.appendChild(a);
         a.appendChild(img)
         fragment.appendChild(li);
     });
+    ul.innerHTML = "";
     ul.appendChild(fragment);
+    
 }
 
 function errorHandler(error) {
