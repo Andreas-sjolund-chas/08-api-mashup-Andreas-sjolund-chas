@@ -10,6 +10,9 @@ button.addEventListener('click', function(event) {
 // Gets synonym words for the searched keyword from word.BigHugeLabsApi
 function getWordsFromHugeLabs(search) {
     getImagesFromFlickr(search);
+
+    // TODO : Move keys to .env
+    
     var bigHugeLabs_key = '28d1c848e23e13d4722cec46813e8e81';
     var query = 'http://words.bighugelabs.com/api/2/' + bigHugeLabs_key + '/' + search + '/json';
     var error = 'no results found';
@@ -84,6 +87,8 @@ function renderWords(words) {
 // Gets the images from FlickrApi when a synonym is clicked
 function getImagesFromFlickr(words, callback) {
     
+    // TODO : Move keys to .env
+
     var flickr_key = '7c1f028dbefb8fcfef42fd3891c69cec';
     // var flickr_key_secret = 'a21b3246cabd27f2';
 
