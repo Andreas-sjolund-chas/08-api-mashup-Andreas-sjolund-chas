@@ -6,7 +6,7 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: {
-    app: ['./src/app.js']
+    app: ['./script.js']
   },
   devtool: 'cheap-module-source-map',
   devServer: {
@@ -26,7 +26,7 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/,
+        test: /\.css$/,
         use: [{
             loader: "style-loader"
         }, {
@@ -43,6 +43,6 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       names: ['manifest']
     }),
-    new HtmlWebpackPlugin({template: './src/index.html'})
+    new HtmlWebpackPlugin({template: './index.html'})
   ]
 };

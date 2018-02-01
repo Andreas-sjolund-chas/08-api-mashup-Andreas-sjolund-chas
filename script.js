@@ -1,3 +1,6 @@
+console.log(process.env.FLICKR_KEY);
+import './src/styles/styles.css';
+
 let button = document.querySelector('.searchBtn');
 
 button.addEventListener('click', function(event) {
@@ -10,10 +13,8 @@ button.addEventListener('click', function(event) {
 // Gets synonym words for the searched keyword from word.BigHugeLabsApi
 function getWordsFromHugeLabs(search) {
     getImagesFromFlickr(search);
-
-    // TODO : Move keys to .env
     
-    var bigHugeLabs_key = '28d1c848e23e13d4722cec46813e8e81';
+    var bigHugeLabs_key = process.env.WORDLAB_KEY;
     var query = 'http://words.bighugelabs.com/api/2/' + bigHugeLabs_key + '/' + search + '/json';
     var error = 'no results found';
     
@@ -86,11 +87,8 @@ function renderWords(words) {
 
 // Gets the images from FlickrApi when a synonym is clicked
 function getImagesFromFlickr(words, callback) {
-    
-    // TODO : Move keys to .env
 
-    var flickr_key = '7c1f028dbefb8fcfef42fd3891c69cec';
-    // var flickr_key_secret = 'a21b3246cabd27f2';
+    var flickr_key = process.env.FLICKR_KEY;
 
     var url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickr_key}&text=${words}`;
     var safe = '&safe_search=1';

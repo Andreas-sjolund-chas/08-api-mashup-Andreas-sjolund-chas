@@ -1,9 +1,10 @@
 {
   "name": "api-mashup",
   "version": "1.0.0",
-  "main": "./src/app.js",
+  "main": "./script.js",
   "license": "Nope",
   "scripts": {
+    "build": "webpack",
     "start": "webpack-dev-server --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
