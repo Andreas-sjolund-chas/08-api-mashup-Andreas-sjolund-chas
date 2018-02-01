@@ -91,8 +91,10 @@ function getImagesFromFlickr(words, callback) {
     var json = '&format=json';
     var callback = '&nojsoncallback=1';
     var sort = '&sort=relevance';
+    var tags = `&tags=${words}`;
+    var extras = '&extras=owner_name';
 
-    var query = url + json + callback + safe + sort;
+    var query = url + json + callback + safe + sort + tags + extras;
     
     var error = 'no pictures found for the searched word';
     fetch(query, {
@@ -114,6 +116,8 @@ function getImagesFromFlickr(words, callback) {
 
 // Renders the results from FlickrApi
 function handlePhotos(photos) {
+    console.log(photos);
+    
     let content = document.querySelector('.errorMsgBox');
     content.innerHTML = "";
 
@@ -126,14 +130,22 @@ function handlePhotos(photos) {
         var serverId = photo['server'];
         var id = photo['id'];
         var secret = photo['secret'];
-        
+        var owner = photo['ownername'];
+
+        var ownerUrl = 'https://www.flickr.com/photos/' + photo['owner'];
         var photoUrl = `https://farm${farmId}.staticflickr.com/${serverId}/${id}_${secret}.jpg`
+
         const li = document.createElement('li');
         const a = document.createElement('a');
         const img = document.createElement('img');
-        a.setAttribute("href", photoUrl);
+        const p = document.createElement('p');
+        
+        p.innerHTML = owner;
+        a.href = ownerUrl;
+        a.target = '_blank';
         img.setAttribute("src", photoUrl);
         li.setAttribute("class", "photo");
+        li.appendChild(p);
         li.appendChild(a);
         a.appendChild(img)
         fragment.appendChild(li);
