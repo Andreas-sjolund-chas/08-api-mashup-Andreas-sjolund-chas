@@ -74,6 +74,7 @@ function renderWords(words) {
         buttons.forEach(button => {
             button.addEventListener('click', function(e) {
                 getImagesFromFlickr(e.target.value);
+                getWordsFromHugeLabs(e.target.value);
             });
     });
 
@@ -84,7 +85,7 @@ function renderWords(words) {
 function getImagesFromFlickr(words, callback) {
     
     var flickr_key = '7c1f028dbefb8fcfef42fd3891c69cec';
-    var flickr_key_secret = 'a21b3246cabd27f2';
+    // var flickr_key_secret = 'a21b3246cabd27f2';
 
     var url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickr_key}&text=${words}`;
     var safe = '&safe_search=1';
@@ -92,7 +93,7 @@ function getImagesFromFlickr(words, callback) {
     var callback = '&nojsoncallback=1';
     var sort = '&sort=relevance';
     var tags = `&tags=${words}`;
-    var extras = '&extras=owner_name';
+    var extras = '&extras=owner_name, url_m';
 
     var query = url + json + callback + safe + sort + tags + extras;
     
@@ -116,7 +117,6 @@ function getImagesFromFlickr(words, callback) {
 
 // Renders the results from FlickrApi
 function handlePhotos(photos) {
-    console.log(photos);
     
     let content = document.querySelector('.errorMsgBox');
     content.innerHTML = "";
@@ -139,8 +139,8 @@ function handlePhotos(photos) {
         const a = document.createElement('a');
         const img = document.createElement('img');
         const p = document.createElement('p');
-        
-        p.innerHTML = owner;
+
+        p.innerHTML = 'Uploaded by: ' + owner;
         a.href = ownerUrl;
         a.target = '_blank';
         img.setAttribute("src", photoUrl);
